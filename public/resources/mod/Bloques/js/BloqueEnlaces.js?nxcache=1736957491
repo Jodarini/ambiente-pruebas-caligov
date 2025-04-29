@@ -1,0 +1,4 @@
+$(document).ready(function() {
+    // Eliminar el atributo tabindex de todos los encabezados de los acordeones
+    $("[class*='contructAcordeon'] .section").attr("tabindex", "0");
+});

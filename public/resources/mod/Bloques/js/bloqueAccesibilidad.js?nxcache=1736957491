@@ -1,0 +1,258 @@
+$("#secVentana").css('display', 'none');
+	$(".btnVentana").click(function(){
+		$("#secVentana").css('display', 'block');
+	});
+	$("#btnClose").click(function(){
+		$("#secVentana").css('display', 'none');
+	});
+
+    $("#myModal").modal()
+
+	function switchConfigTools(o) {
+	    switch (($("body").removeClass("configDefaultTools configHighContrastTools configTextOnlyTools"), $('[data-type="configTools"]').removeClass("active"), o)) {
+	        case "default":
+	            $('[data-typedes="default"]').addClass("active"), $("body").addClass("configDefaultTools");
+	            break;
+	        case "highContrast":
+	            $('[data-typedes="highContrast"]').addClass("active"), $("body").addClass("configHighContrastTools");
+	            break;
+	        case "textOnly":
+	            $('[data-typedes="textOnly"]').addClass("active"), $("body").addClass("configTextOnlyTools");
+	    }
+	}
+	function switchConfigFont(o) {
+	    switch (($("body").removeClass("faFontLg faFont2x faFont3x"), $('[data-type="configFont"]').removeClass("active"), o)) {
+	        case "lg":
+	            $('[data-typedes="lg"]').addClass("active"), $("body").addClass("faFontLg");
+	            break;
+	        case "2x":
+	            $('[data-typedes="2x"]').addClass("active"), $("body").addClass("faFont2x");
+	            break;
+	        case "3x":
+	            $('[data-typedes="3x"]').addClass("active"), $("body").addClass("faFont3x");
+	    }
+	}
+	function readCookie(o) {
+	    for (var n = o + "=", e = document.cookie.split(";"), t = 0; t < e.length; t++) {
+	        for (var a = e[t]; " " == a.charAt(0); ) a = a.substring(1, a.length);
+	        if (0 == a.indexOf(n)) return a.substring(n.length, a.length);
+	    }
+	    return null;
+	}
+    $(".btnAccesibilidad__contraste_new").click(function () {
+       return $("body").hasClass("configHighContrastTools") ? $("body").removeClass("configHighContrastTools") : $("body").addClass("configHighContrastTools"),!1;
+    }),
+    $(".btnAccesibilidad__contraste_new").click(function () {
+        return $("body").hasClass("configTextOnlyTools") && $("body").removeClass("configTextOnlyTools"),!1;
+    }),
+    $(".btnAccesibilidad__texto").click(function () {
+        return $("body").hasClass("configTextOnlyTools") ? $("body").removeClass("configTextOnlyTools") : $("body").addClass("configTextOnlyTools"), !1;
+    }),
+    $(".btnAccesibilidad__texto").click(function () {
+        return $("body").hasClass("configHighContrastTools") && $("body").removeClass("configHighContrastTools"), !1;
+    }),
+    $(".btnAccesibilidad__minFontSize").click(function () {
+        (limiteMinFont = 16), (sizeFuenteActual = $("body").css("font-size"));
+        var o = parseFloat(sizeFuenteActual, 10) - 1;
+        return o <= limiteMinFont && (o = limiteMinFont), $("body, html").css("font-size", o), !1;
+    }),
+    $(".btnAccesibilidad__maxFontSize").click(function () {
+        (limiteMaxFont = 22), (sizeFuenteActual = $("body").css("font-size"));
+        var o = parseFloat(sizeFuenteActual, 10) + 1;
+        return o >= limiteMaxFont && (o = limiteMaxFont), $("body, html").css("font-size", o), !1;
+    }),
+    $(".btnTopPage").click(function () {
+        return console.log("subir"), $("html, body").animate({ scrollTop: 0 }, "slow"), !1;
+    }),
+    $(".btnConfigTools").click(function (o) {
+        o.preventDefault();
+        var n = $(this).data("type"),
+            e = $(this).data("typedes");
+        console.log(n + " " + e), (document.cookie = n + "=" + e + "; path=/"), "configTools" == n && switchConfigTools(e), "configFont" == n && switchConfigFont(e);
+    }),
+    $(document).ready(function () {
+        var o = readCookie("configTools"),
+            n = readCookie("configFont");
+        readCookie("configTools") && switchConfigTools(o), readCookie("configFont") && switchConfigFont(n);
+    })
+    $(".espaciadoText").click(function (o) {
+        // Obtener el body
+         var body = document.querySelector('body');
+        // Definir el espaciado deseado 
+         var valueData = $(this).attr('data-value');
+         $(".espaciadoText").removeClass('active');
+
+        // Añadir la clase 'active' al botón que fue clickeado
+        $(this).addClass('active');
+        
+         if(valueData === '0'){
+            body.style.removeProperty('letter-spacing');
+         }else if(valueData === '2' ||  valueData === '3' ) {
+            // Aplicar el espaciado al texto del body
+            body.style.letterSpacing = valueData + 'px';
+         }
+
+         // Si deseas asegurarte de que los elementos dentro del modal no tengan espaciado
+        $("#secVentanaUniversal *").css('letter-spacing', ''); // Eliminar espaciado de todos los elementos dentro del modal
+        
+    }),
+
+    $(".alturaText").click(function (o) {
+        // Obtener el body
+         var body = document.querySelector('body');
+         var height = 'normal';
+        // Definir el espaciado deseado 
+         var valueData = $(this).attr('data-value');
+
+         $(".alturaText").removeClass('active');
+
+        // Añadir la clase 'active' al botón que fue clickeado
+        $(this).addClass('active');
+
+         if(valueData === 'a'){
+            body.style.removeProperty('line-height');
+         }else if(valueData === 'b'){
+            height = '2em';
+         }else if(valueData === 'c'){
+            height = '3em';
+         }
+        // Aplicar el espaciado al texto del body
+        if(valueData === 'b' || valueData === 'c' ){
+            body.style.lineHeight = height;
+        }
+
+            // Asegurarse de que los elementos dentro del modal no tengan espaciado
+            $("#secVentanaUniversal *").css('line-height', ''); // Eliminar altura de línea de los elementos dentro del modal
+    }),
+
+    $(".alingText").click(function (o) {
+        // Obtener el body
+         var body = document.querySelector('body');
+         var text_align = 'na';
+        // Definir la alineación deseada 
+         var valueData = $(this).attr('data-value');
+
+         $(".alingText").removeClass('active');
+
+         // Añadir la clase 'active' al botón que fue clickeado
+         $(this).addClass('active');
+         
+         if(valueData === 'na'){
+            body.style.removeProperty('text-align');
+         }else if(valueData === 'left' || valueData === 'center' || valueData === 'right' || valueData === 'justify'){
+            text_align = valueData;
+            // Aplicar la alineación al texto del body
+            body.style.textAlign = text_align;
+         }
+         // Asegurarse de que los elementos dentro del modal no tengan alineación de texto
+        $("#secVentanaUniversal *").css('text-align', ''); // Eliminar alineación de los elementos dentro del modal
+    }),
+
+    $(".dislexia").click(function (o) {
+        // Obtener el body
+         var bodyFont = document.querySelector('body');
+        // Definir la fuente deseada 
+         var valueData = $(this).attr('data-value');
+
+         $(".dislexia").removeClass('active');
+
+         // Añadir la clase 'active' al botón que fue clickeado
+         $(this).addClass('active');
+
+         if(valueData === 'na'){
+            bodyFont.style.removeProperty('font-family');
+         }else if(valueData === 'dislexia'){
+            // eliminar la fuente  al texto del body
+            bodyFont.style.fontFamily = 'UDF, serif ';
+         }else if( valueData === 'legible'){
+            // Aplicar la fuente  al texto del body
+            bodyFont.style.fontFamily = 'Arial, serif';
+         }
+
+        // Asegurarse de que los elementos dentro del modal no tengan fuente
+        $("#secVentanaUniversal *").css('font-family', ''); // Eliminar fuente de los elementos dentro del modal
+    }),
+
+    $(".OpcAvanzadas").click(function (o) {
+
+        var body = document.querySelector('body');
+        // eliminar la configuracion  al texto del body
+        body.style.removeProperty('letter-spacing');
+        body.style.removeProperty('line-height');
+        body.style.removeProperty('text-align');
+        body.style.removeProperty('font-family');
+
+        // Eliminar la clase 'active' de todas las opciones de espaciado, dislexia, alineación
+     $(".espaciadoText, .alturaText,  .alingText, .dislexia").removeClass('active');
+
+       
+    }),
+
+    $("#btnVentanaUniversal").click(function(){
+		$("#secVentanaUniversal").css('display', 'block');
+	});
+
+    $(".modalAccesibilidadClose").click(function (o) {
+        $("#secVentanaUniversal").css('display', 'none');
+    }),
+    
+    $(document).ready(function(){
+      $('.scroll-to-topButton').click(function(){
+          $('body, html').animate({
+              scrollTop: '0px'
+          }, 300)
+      });
+      $(window).scroll(function(){
+          if($(this).scrollTop() > 0){
+              $('.scroll-to-topButton').slideDown(300);
+          }else{
+              $('.scroll-to-topButton').slideUp(300)
+          }
+      })
+  });
+
+  // Obtener todos los elementos con la clase 'pd-top-lv1'
+var elements = document.getElementsByClassName('pd-top-lv1');
+// Recorrer la colección de elementos y añadir el event listener a cada uno
+for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', function(event) {
+        // Capturar el atributo 'data-key' del elemento clickeado
+        var valorAtributo = event.currentTarget.getAttribute('data-key');
+        
+        // Mostrar u ocultar el formulario
+        const parentDiv = document.getElementById('id-gov-accessibility-'+valorAtributo);
+        parentDiv.classList.toggle('active-panel-accessibility');
+
+        const buttonPanel = document.getElementById('button_panel-'+valorAtributo);
+        
+        // Cambiar el icono según si el formulario está activo
+        if (parentDiv.classList.contains('active-panel-accessibility')) {
+            buttonPanel.innerHTML = '<i class="fa fa-chevron-left "></i>';
+        } else {
+            buttonPanel.innerHTML = '<i class="fa fa-chevron-right"></i>';
+        }
+    });
+}
+
+
+$(document).ready(function () {
+
+    document.querySelectorAll('[id^="id-gov-accessibility-"]').forEach(div => {
+        let divId = div.id;
+        if (sessionStorage.getItem(divId) === "true") {
+            div.classList.add('d-none');
+        }
+    });
+
+    // Evento para cerrar el div y guardar en sessionStorage
+    $(".universal-close").on("click", function () {
+        let keyElement =  $(this).data('key');
+        let nameElementStorage = "id-gov-accessibility-" + keyElement;
+        $("#id-gov-accessibility-" + keyElement).hide();
+        sessionStorage.setItem(nameElementStorage, "true");
+    });
+});
+
+
+
+  

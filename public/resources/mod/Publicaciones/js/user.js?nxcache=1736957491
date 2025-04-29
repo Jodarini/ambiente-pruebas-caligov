@@ -1,0 +1,81 @@
+
+window.addEventListener('load',(event) => {
+    let idTable = document.querySelectorAll(".idTable");
+    for(let i = 0 ; i < idTable.length;i++){
+        let idTableRender = idTable[i].value;
+
+    var dataDiv = $("#dataDivSolicitudes");
+    if ($('#listPendingTransfers'+idTableRender).length) {
+        let urlGetFiles = dataDiv.data("urlTable")+'&id='+idTableRender;
+        $.fn.DataTable.ext.pager.numbers_length = 5;
+        $('#listPendingTransfers'+idTableRender).DataTable({
+            
+            pagingType: "simple_numbers",
+            language: {
+                url: '/media/plugins/dataTable/1.10.12/resources/lang/es.json'
+            },
+            "columns": [
+                {data: '0',className: "positionIcon view_detail td-hide td-trunc pointerAction"},
+                {data: '1',
+                render: function ( data, type, row ) {
+                    return '<div class="infoDocumentos form-row sinpadding col-xs-12"><strong class="col-md-3"> Nombre:</strong><div class="col-md-9"><span class="nombre"><strong>' + data.nombre + '</strong></span> <span class="peso">' + data.size + '</span><span class="fecha">'+ data.fecha +'</span></div><strong class="col-md-3">Descripción:</strong><p class="col-md-9">' + data.descripcion + '</p>   </div>'
+                }},
+            ],
+            
+            "info": false,
+            "aaSorting": [],
+            "bRetrieve": true,
+            "iDisplayLength": 5,
+            "bDestroy": true,
+            "bSort": false,
+            "processing": true,
+            "serverSide": true,
+            "searching": false,
+            "lengthChange": false,
+            "ajax": {
+                "url": urlGetFiles,
+                "data": function (d) {
+                    delete d.columns;
+                }
+            },
+            "drawCallback": function( settings ) {
+                $('#listPendingTransfers'+ idTableRender + '_next').addClass('next_button_cl');
+                $('#listPendingTransfers'+ idTableRender + '_previous').addClass('previous_button_cl');
+            },
+            autoWidth: false,
+        });
+    }
+    } 
+});
+$('.cutText').each(function(){
+    var length = 10;
+    if($(this).data("length")){
+        length = $(this).data("length");
+    }
+    var text = $(this).text();
+    if(text.length > length) {
+        var separador = "...";
+        if ($(this).data("sep")) {
+            separador = $(this).data("sep");
+        }
+        var shortText = jQuery.trim(text).substring(0, length)
+            .split(" ").slice(0, -1).join(" ") + " " + separador;
+        $(this).text(shortText);
+    }
+});
+
+$(function(){
+    $("#tema").change(function(){
+        var value = $("#tema").val();
+        var regNum = /^\d+$/;
+        var regTags = /(&lt;([^>]+)>)/gi;
+        if(regNum.test(value) && !regTags.test(value)){
+            var tema = "?tema="+value;
+        }else{
+            var tema = "?tema=0";    
+        }
+
+        window.location.href = tema;
+    });
+})
+
